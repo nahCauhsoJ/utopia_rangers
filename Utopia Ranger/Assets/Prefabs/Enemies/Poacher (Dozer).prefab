@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &312734407217928003
+--- !u!1 &20977471670108221
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 312734407217928002}
-  - component: {fileID: 312734407217928006}
-  - component: {fileID: 312734407217928004}
-  - component: {fileID: 312734407217928007}
-  - component: {fileID: 312734407217928005}
+  - component: {fileID: 20977471670108220}
+  - component: {fileID: 20977471670108216}
+  - component: {fileID: 20977471670108218}
+  - component: {fileID: 20977471670108217}
+  - component: {fileID: 20977471670108167}
   m_Layer: 6
-  m_Name: Normal Poacher
+  m_Name: Poacher (Dozer)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &312734407217928002
+--- !u!4 &20977471670108220
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312734407217928003}
+  m_GameObject: {fileID: 20977471670108221}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10, y: 11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,13 +35,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &312734407217928006
+--- !u!212 &20977471670108216
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312734407217928003}
+  m_GameObject: {fileID: 20977471670108221}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -87,14 +87,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &312734407217928004
+--- !u!50 &20977471670108218
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312734407217928003}
+  m_GameObject: {fileID: 20977471670108221}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -108,14 +108,14 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &312734407217928007
+--- !u!58 &20977471670108217
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312734407217928003}
-  m_Enabled: 1
+  m_GameObject: {fileID: 20977471670108221}
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -124,24 +124,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &312734407217928005
+--- !u!114 &20977471670108167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312734407217928003}
+  m_GameObject: {fileID: 20977471670108221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 489e372210d0612419b930c193a06973, type: 3}
+  m_Script: {fileID: 11500000, guid: d40b17982e679ef42a2758f615cdd671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 312734407217928004}
-  col: {fileID: 312734407217928007}
-  sprite: {fileID: 312734407217928006}
+  rb: {fileID: 20977471670108218}
+  col: {fileID: 20977471670108217}
+  sprite: {fileID: 20977471670108216}
   battle_ready: 0
   spawn_delay: 0
-  start_hp: 100
-  start_move_speed: 2.5
-  damage: 5
+  start_hp: 500
+  start_move_speed: 0.5
+  damage: 20
+  greed_worth: 60
   path_index: 0
+  knockback_reduction: 1

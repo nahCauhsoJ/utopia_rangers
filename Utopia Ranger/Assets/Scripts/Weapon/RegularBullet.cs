@@ -38,15 +38,16 @@ public class RegularBullet : MonoBehaviour
         RaycastHit2D hit = Physics2D.Linecast((Vector2)transform.position,
             (Vector2)transform.position + dist,
             LayerMask.GetMask("Enemy"));
-        if (hit.collider != null && HitEnemy(hit.collider)) Return();
+        if (hit.collider != null && DidHitEnemy(hit.collider)) Return();
         transform.position += (Vector3) dist;
     }
 
-    bool HitEnemy(Collider2D c)
+    bool DidHitEnemy(Collider2D c)
     {
         EnemyBase enemy = c.GetComponent<EnemyBase>();
         if (enemy == null) return false;
-        enemy.Damage(bullet.damage);
+        if (source == null) enemy.Damage(bullet.damage);
+        else source.HitEnemy(enemy,bullet);
         return true;
     }
 

@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         pc_map = pc_core.Player;
 
         pc_map.Move.performed += ctx => player_move_dir = ctx.ReadValue<Vector2>();
-        pc_map.ShootStart.performed += _ => current_weapon.OnShootStart();
+        pc_map.ShootStart.performed += _ => {if (CanShoot()) current_weapon.OnShootStart();};
         pc_map.ShootEnd.performed += _ => current_weapon.OnShootEnd();
     }
 
@@ -54,5 +54,13 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         rb.velocity = player_move_dir == Vector2.zero ? Vector2.zero : player_move_dir * move_speed * Time.deltaTime;
+    }
+
+    // If certain conditions are met, we're not shooting.
+    // List:
+    //      If the Build List is up (.activeSelf = true)
+    bool CanShoot()
+    {
+        return true;
     }
 }

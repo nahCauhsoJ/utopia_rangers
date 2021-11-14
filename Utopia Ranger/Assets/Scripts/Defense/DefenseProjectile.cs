@@ -35,18 +35,21 @@ public class DefenseProjectile : MonoBehaviour
         RaycastHit2D hit = Physics2D.Linecast((Vector2)transform.position,
             (Vector2)transform.position + dist,
             LayerMask.GetMask("Enemy"));
-        if (hit.collider != null && HitEnemy(hit.collider)) Return();
+        if (hit.collider != null && DidHitEnemy(hit.collider)) Return();
         transform.position += (Vector3) dist;
     }
 
-    bool HitEnemy(Collider2D c)
+    protected virtual bool DidHitEnemy(Collider2D c)
     {
         EnemyBase enemy = c.GetComponent<EnemyBase>();
         if (enemy == null) return false;
-        enemy.Damage(proj.damage);
+        if (source == null) enemy.Damage(proj.damage);
+        else source.HitEnemy(enemy, proj);
         return true;
     }
 
+    // All projectiles have at least these variables.
+    // For anything special, modify it from somewhere else. Remember that we have the source here.
     [System.Serializable]
     public class ProjectileData
     {

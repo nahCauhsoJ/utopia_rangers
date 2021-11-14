@@ -43,6 +43,13 @@ public class WeaponBase : MonoBehaviour
         if (round_cooldown_left < 0) round_cooldown_left = 0;
     }
 
+    // angle range: negative degree to positive, starting at 0. e.g. (-10,10) scatters bullet for 20 degrees, anywhere.
+    protected Quaternion ScatterBullet(Quaternion orig_rot, Vector2 angle_range)
+    {
+        if (angle_range.x == angle_range.y) return orig_rot;
+        return orig_rot * Quaternion.AngleAxis(Random.Range(angle_range.x,angle_range.y), Vector3.forward);
+    }
+
     // Does nothing if the round isn't available
     void PEW()
     {
@@ -54,9 +61,14 @@ public class WeaponBase : MonoBehaviour
         }
     }
 
-    // This is the class we want to derive if the weapon fires a different type of bullet
+    // This is the class we want to derive if the weapon does something else than firing a bullet.
     protected virtual void PEWPEW()
     {
         WeaponCore.SpawnRegularBullet(transform.position, transform.rotation, bullet_data, this);
+    }
+
+    public virtual void HitEnemy(EnemyBase enemy, RegularBullet.BulletData bullet)
+    {
+        enemy.Damage(bullet.damage);
     }
 }

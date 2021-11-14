@@ -16,7 +16,7 @@ public class MapCore : MonoBehaviour
     public List<GameObject> waves;
     Dictionary<int,WaveStatus> waves_status = new Dictionary<int,WaveStatus>();
     Dictionary<int,EnemyBase[]> wave_enemies = new Dictionary<int,EnemyBase[]>();
-    int current_wave; // Starts at 0, not 1.
+    public int current_wave{get; private set;} // Starts at 0, not 1.
 
     public float next_wave_delay;
     bool next_wave_waiting;
@@ -51,6 +51,7 @@ public class MapCore : MonoBehaviour
             {
                 next_wave_elapsed = 0;
                 next_wave_waiting = false;
+                current_wave++;
                 SpawnWave(current_wave);
             }
         }
@@ -68,7 +69,7 @@ public class MapCore : MonoBehaviour
                 {
                     if (i.battle_ready && !i.dead)
                     {
-                        i.path_progress += i.move_speed * Time.deltaTime;
+                        i.path_progress += (i.move_speed > 0 ? i.move_speed : 0) * Time.deltaTime;
                         i.SetPathPos();
                         if (i.rb.position == path_data[i.path_index].path_nodes[path_data[i.path_index].path_nodes.Count-1]) DamageBase(i);
                         enemies_left++;
@@ -108,7 +109,7 @@ public class MapCore : MonoBehaviour
     {
         waves[current_wave].SetActive(false);
         if (current_wave >= waves.Count - 1) WinLevel();
-        else { current_wave++; next_wave_waiting = true; }
+        else { next_wave_waiting = true; }
     }
 
     public void DamageBase(EnemyBase enemy)

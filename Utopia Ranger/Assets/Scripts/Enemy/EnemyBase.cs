@@ -8,7 +8,9 @@ public class EnemyBase : MonoBehaviour
     public enum EnemyType
     {
         None,
-        Normal
+        Normal,
+        Lighting,
+        Dozer
     }
     [Header("Enemy Components")]
     public Rigidbody2D rb;
@@ -30,14 +32,21 @@ public class EnemyBase : MonoBehaviour
 
     public float start_move_speed;
     public float move_speed{get;set;}
-
     public float damage;
+    public int greed_worth;
+
+    public List<DebuffBase> debuffs{get;set;} = new List<DebuffBase>();
 
     [Header("Path-related")]
     public int path_index; // Reference path_data of MapCore for the correct path. Not checking index overflow.
-    public float path_progress{get; set;} // The number is in terms of world units. Actual position will be calculated by SetPathPos()
+    public float path_progress{get; set;} // The number is in terms of world units. Actual position will be calculated by SetPathPos()]
+
+    [Header("Modifiers for effects")]
+    public float knockback_reduction;
 
     Vector2 orig_pos;
+
+    //public List<>
 
     protected virtual void Awake() {orig_pos = rb.position;}
     protected virtual void Start() {}
@@ -45,7 +54,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        
+        DebuffBase.UpdateDebuffs(debuffs, Time.deltaTime);
     }
 
     IEnumerator Spawn(float delay)
@@ -68,9 +77,13 @@ public class EnemyBase : MonoBehaviour
         dead = true;
         sprite.enabled = false;
         col.enabled = false;
+        if (!despawn)
+        {
+            DefenseCore.main.greed += greed_worth;
+        }
     }
 
-    public void Damage(float dmg)
+    public virtual void Damage(float dmg)
     {
         hp -= dmg;
         if (hp <= 0) Die();
@@ -80,5 +93,11 @@ public class EnemyBase : MonoBehaviour
     public void SetPathPos()
     {
         rb.position = MapCore.main.path_data[path_index].GetPathPos(path_progress);
+    }
+
+    public void Knockback(float oof)
+    {
+        path_progress -= oof * (1 - knockback_reduction);
+        if (path_progress < 0) path_progress = 0;
     }
 }
