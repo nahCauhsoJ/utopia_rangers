@@ -10,6 +10,7 @@ public class MapCore : MonoBehaviour
     public bool game_on;
 
     public List<Paths> available_paths;
+    public List<Collider2D> place_zones;
     public Dictionary<int,PathStats> path_data = new Dictionary<int,PathStats>(); // The Count should be parallel to available_paths
 
     public List<GameObject> waves;
@@ -77,6 +78,23 @@ public class MapCore : MonoBehaviour
                 waves_status[current_wave].cleared = enemies_left == 0;
                 if (waves_status[current_wave].cleared) EndWave();
             }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        for (var i = 0; i < available_paths.Count; i++)
+        {
+            float ratio = (float)i/available_paths.Count;
+            Vector2 ratio_offset = new Vector2(ratio,ratio) * 0.2f;
+            Gizmos.color = new Color(ratio,ratio,1,1);
+            for (var j = 0; j < available_paths[i].path_points.Count-1; j++)
+                Gizmos.DrawLine(available_paths[i].path_points[j] + ratio_offset,available_paths[i].path_points[j+1] + ratio_offset);
+        }
+        foreach (var i in place_zones)
+        {
+            Gizmos.color = new Color(1f,1f,0.5f,0.5f);
+            Gizmos.DrawCube(i.transform.position,i.bounds.size);
         }
     }
 

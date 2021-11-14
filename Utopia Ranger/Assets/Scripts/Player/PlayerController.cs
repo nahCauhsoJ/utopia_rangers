@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController main;
+
     public Rigidbody2D rb;
     public Collider2D col;
     public SpriteRenderer sprite;
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        main = this;
         cam = Camera.main;
         InputSetup();
         move_speed = start_move_speed;
