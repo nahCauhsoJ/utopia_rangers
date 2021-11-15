@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponBase : MonoBehaviour
 {
     public RegularBullet.BulletData bullet_data;
+    public AudioSource voice; // Sometimes we question, how can YOU JUST shut UP. (Hey, but guns can talk.)
     public int magazine; // If it exceeds 999 (i.e. >= 1000), it's unlimited bullets.
     public bool automatic; // If automatic, holding the shoot button will spam the bullets.
     public float round_cooldown; // Whether it's automatic or not, if this is > 0, it cannot shoot.
@@ -53,6 +54,7 @@ public class WeaponBase : MonoBehaviour
     // Does nothing if the round isn't available
     void PEW()
     {
+        if (!MapCore.main.game_on) return;
         if (automatic)
         {
             if (round_interval_left == 0) { PEWPEW(); round_interval_left = round_interval; }

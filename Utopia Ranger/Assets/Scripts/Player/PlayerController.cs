@@ -53,7 +53,9 @@ public class PlayerController : MonoBehaviour
     
     void FixedUpdate()
     {
-        rb.velocity = player_move_dir == Vector2.zero ? Vector2.zero : player_move_dir * move_speed * Time.deltaTime;
+        if (MapCore.main.game_on)
+            rb.velocity = player_move_dir == Vector2.zero ? Vector2.zero : player_move_dir * move_speed * Time.deltaTime;
+        else rb.velocity = Vector2.zero;
     }
 
     // If certain conditions are met, we're not shooting.

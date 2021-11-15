@@ -6,8 +6,9 @@ public class DefenseBase : MonoBehaviour
 {
     public int max_level = 1;
 
-    public Collider2D interact_area;
+    public CircleCollider2D interact_area;
     public AimArea aim_area;
+    public AudioSource voice; // Sometimes we question, how can animals talk without a good vocal cord?
 
     // These will be modified from ActionWheelCore.
     public int current_upgrade{get;set;}
@@ -29,9 +30,24 @@ public class DefenseBase : MonoBehaviour
         aim_area.transform.up = rot;
     }
 
-    public virtual void HitEnemy(EnemyBase enemy, DefenseProjectile.ProjectileData proj)
+    public virtual void HitEnemy(EnemyBase enemy, float dmg)
     {
-        enemy.Damage(proj.damage);
+        enemy.Damage(dmg);
+    }
+
+    public virtual List<EnemyBase> HitEnemyAoe(Vector3 pos, float radius, float dmg)
+    {
+        List<EnemyBase> enemies = new List<EnemyBase>();
+        Collider2D[] victims = Physics2D.OverlapCircleAll(pos, radius, LayerMask.GetMask("Enemy"));
+        foreach (var i in victims) enemies.Add(i.GetComponent<EnemyBase>());
+        foreach (var i in enemies) i.Damage(dmg);
+        return enemies;
+    }
+
+    // Some units need another update upon placing down.
+    public virtual void OnPlace()
+    {
+
     }
 
     // THE lazy function to simply refresh the unit from its upgrade states.

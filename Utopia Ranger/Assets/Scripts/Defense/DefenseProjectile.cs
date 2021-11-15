@@ -44,7 +44,7 @@ public class DefenseProjectile : MonoBehaviour
         EnemyBase enemy = c.GetComponent<EnemyBase>();
         if (enemy == null) return false;
         if (source == null) enemy.Damage(proj.damage);
-        else source.HitEnemy(enemy, proj);
+        else source.HitEnemy(enemy, proj.damage);
         return true;
     }
 

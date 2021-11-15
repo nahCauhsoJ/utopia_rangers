@@ -15,8 +15,8 @@ TagManager:
   - Units
   - UnitsAim
   - Zone_Placable
-  - 
-  - 
+  - Zone_Water
+  - Zone_Lava
   - 
   - 
   - 

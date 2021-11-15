@@ -42,14 +42,6 @@ public class DefenseCore : MonoBehaviour
     [System.Serializable]
     public class DefenseData
     {
-        // public DefenseData(int unit_id, string unit_name, GameObject unit_prefab, int cost, Vector2 unit_size)
-        // {
-        //     this.unit_id = unit_id;
-        //     this.unit_name = unit_name;
-        //     this.unit_prefab = unit_prefab;
-        //     this.cost = cost;
-        //     this.unit_size = unit_size;
-        // }
         public int unit_id;
         public string unit_name;
         public GameObject unit_prefab;
@@ -72,6 +64,7 @@ public class DefenseCore : MonoBehaviour
     {
         if (def_obj == null) return null;
         if (def_obj.GetComponent<SquirrelDefense>() != null) return main.def_data[0];
+        if (def_obj.GetComponent<ElephantDefense>() != null) return main.def_data[1];
         return null;
     }
 

@@ -16,6 +16,7 @@ public class EnemyBase : MonoBehaviour
     public Rigidbody2D rb;
     public Collider2D col;
     public SpriteRenderer sprite;
+    public AudioSource voice; // Sometimes we question, how can an- oh wait, they're human.
 
     // The enemy has to be active at the start to be recorded by MapCore, but
     //      we don't want to trigger the spawn mechanics. Hence, enemies only actually spawn
@@ -55,6 +56,7 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Update()
     {
         DebuffBase.UpdateDebuffs(debuffs, Time.deltaTime);
+        transform.Rotate(transform.rotation.eulerAngles + Vector3.forward * 20f * Time.deltaTime);
     }
 
     IEnumerator Spawn(float delay)
@@ -80,6 +82,7 @@ public class EnemyBase : MonoBehaviour
         if (!despawn)
         {
             DefenseCore.main.greed += greed_worth;
+            Sound.Play(voice,Sound.main.poacher_death,0.3f,Random.Range(0.8f,1.3f)); 
         }
     }
 

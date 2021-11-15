@@ -17,6 +17,7 @@ public class ActionWheelCore : MonoBehaviour
     public Image aim_range;
 
     public GameObject upgardelist_obj;
+    public List<GameObject> upgradelist_unit_lists; // This is parallel to the unit_id.
 
     bool in_place_zone;
     DefenseBase inspected_defense;
@@ -60,7 +61,7 @@ public class ActionWheelCore : MonoBehaviour
     void ActionModeUpdate()
     {
         int result_mode = 0; // 0: Nothing shows, 1: Build mode (no defense nearby), 2: Inspect mode (touching a defense)
-        Collider2D[] cols = Physics2D.OverlapPointAll(PlayerController.main.transform.position, LayerMask.GetMask("Units","Zone_Placable"));
+        Collider2D[] cols = Physics2D.OverlapPointAll(PlayerController.main.transform.position, LayerMask.GetMask("Units"));
         
         DefenseBase found_defense = null;
         foreach (var i in cols)
@@ -72,9 +73,8 @@ public class ActionWheelCore : MonoBehaviour
 
         if (result_mode == 0)
         {
-            bool found_place_zone = false;
-            foreach (var i in cols) if (MapCore.main.place_zones.Contains(i)) { found_place_zone = true; break; }
-            if (found_place_zone) result_mode = 1;
+            Collider2D col = Physics2D.OverlapPoint(PlayerController.main.transform.position, LayerMask.GetMask("Zone_Placable"));
+            if (col != null) result_mode = 1;
         }
         if (buildlist_obj.activeSelf || upgardelist_obj.activeSelf) result_mode = 0;
 
@@ -173,7 +173,10 @@ public class ActionWheelCore : MonoBehaviour
     void ActionUpgrade()
     {
         // Just in case. Saw the button being too slow to turn off.
-        if (inspected_defense != null && inspected_defense.current_upgrade >= inspected_defense.max_level) return;
+        if (inspected_defense == null || inspected_defense.current_upgrade >= inspected_defense.max_level) return;
+        for (var i = 0; i < upgradelist_unit_lists.Count; i++)
+            if (inspected_defense_data.unit_id == i) upgradelist_unit_lists[i].SetActive(true);
+            else upgradelist_unit_lists[i].SetActive(false);
         upgardelist_obj.SetActive(true);
     }
 

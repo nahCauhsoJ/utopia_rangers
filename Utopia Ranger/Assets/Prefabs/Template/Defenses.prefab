@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4554173765696809643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4554173765696809642}
+  - component: {fileID: 4554173765696809645}
+  m_Layer: 0
+  m_Name: Defenses
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4554173765696809642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554173765696809643}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4554173765696809645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554173765696809643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff17e22342313142aa651dd6b587b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pool_parent: {fileID: 0}
+  projectile_prefab: {fileID: 966527516324307300, guid: 25ac63e955046e64cabb5afcc53d4f6b, type: 3}
+  def_data:
+  - unit_id: 0
+    unit_name: Squirrel
+    unit_prefab: {fileID: 2530322891043405728, guid: 98e443398bc1a314eb791d2f9d57f9e2, type: 3}
+    cost:
+      lvl_0: 25
+      lvl_1: 4b00000032000000
+    unit_size: {x: 1, y: 1}
+  - unit_id: 1
+    unit_name: Elephant
+    unit_prefab: {fileID: 6525802138627490283, guid: dad5ebb1a5bab2b4d918a13d7a12c045, type: 3}
+    cost:
+      lvl_0: 100
+      lvl_1: 64000000c8000000
+    unit_size: {x: 3, y: 3}
+  greed: 0

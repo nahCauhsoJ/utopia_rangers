@@ -17,5 +17,6 @@ public class AcornMinigun : WeaponBase
     protected override void PEWPEW()
     {
         WeaponCore.SpawnRegularBullet(transform.position, ScatterBullet(transform.rotation, bullet_scatter_angle), bullet_data, this);
+        Sound.Play(voice,Sound.main.pop,0.1f,Random.Range(0.8f,1.2f)); 
     }
 }

@@ -9,6 +9,7 @@ public class MapCore : MonoBehaviour
     public float base_health = 100f;
     public bool game_on;
 
+    public AudioSource voice; // Sometimes we question, how can an- wait this is a frickin' floor.
     public List<Paths> available_paths;
     public List<Collider2D> place_zones;
     public Dictionary<int,PathStats> path_data = new Dictionary<int,PathStats>(); // The Count should be parallel to available_paths
@@ -19,8 +20,8 @@ public class MapCore : MonoBehaviour
     public int current_wave{get; private set;} // Starts at 0, not 1.
 
     public float next_wave_delay;
-    bool next_wave_waiting;
-    float next_wave_elapsed;
+    public bool next_wave_waiting{get; private set;}
+    public float next_wave_elapsed{get; private set;}
 
     void Awake()
     {
@@ -39,7 +40,8 @@ public class MapCore : MonoBehaviour
     void Start()
     {
         game_on = true;
-        SpawnWave(0);
+        current_wave = -1; // It's safe. I know what I'm doing.
+        next_wave_waiting = true;
     }
 
     void Update()
@@ -62,7 +64,7 @@ public class MapCore : MonoBehaviour
         if (game_on)
         {
             if (base_health <= 0) LoseLevel();
-            else if (waves[current_wave].activeSelf)
+            else if (!next_wave_waiting && waves[current_wave].activeSelf)
             {
                 int enemies_left = 0;
                 foreach (var i in wave_enemies[current_wave])
@@ -103,6 +105,7 @@ public class MapCore : MonoBehaviour
     {
         current_wave = wave;
         waves[current_wave].SetActive(true);
+        Sound.Play(voice,Sound.main.wave_start,0.5f,1f); 
     }
 
     public void EndWave()
@@ -116,11 +119,12 @@ public class MapCore : MonoBehaviour
     {
         base_health -= enemy.damage;
         enemy.Die(true);
+        Sound.Play(voice,Sound.main.punch,0.5f,Random.Range(0.9f,1.1f)); 
     }
 
     public void LoseLevel()
     {
-        print("Lose");
+        HUDCore.main.game_over.SetActive(true);
         game_on = false;
     }
 

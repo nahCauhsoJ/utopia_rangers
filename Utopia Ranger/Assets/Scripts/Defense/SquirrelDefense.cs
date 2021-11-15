@@ -30,15 +30,21 @@ public class SquirrelDefense : DefenseBase
         DefenseCore.SpawnSquirrelProjectile(transform.position, aim_area.transform.rotation, projectile_data, this);
     }
 
-    public override void HitEnemy(EnemyBase enemy, DefenseProjectile.ProjectileData proj)
+    public override void HitEnemy(EnemyBase enemy, float dmg)
     { 
-        base.HitEnemy(enemy,proj);
+        base.HitEnemy(enemy,dmg);
         // This is poop's slow effect.
-        if (current_upgrade == 1 && upgrade_1_type == 1)
-        {   // It says squirrel poop, but it just means poop thrown by the squirrels, it's actually hyena poop.
-            DebuffBase debuff = DebuffBase.GetDebuff("squirrel_poop",enemy.debuffs);
-            if (debuff == null) enemy.debuffs.Add(new DebuffSlow(enemy, 3f, -0.5f, "squirrel_poop")); 
-            else debuff.Extend(3f);
+        if (current_upgrade == 0) Sound.Play(voice,Sound.main.stone_hit,0.5f,Random.Range(0.9f,1.1f)); 
+        if (current_upgrade == 1)
+        {
+            if (upgrade_1_type == 1)
+            {
+                // It says squirrel poop, but it just means poop thrown by the squirrels, it's actually hyena poop.
+                DebuffBase debuff = DebuffBase.GetDebuff("squirrel_poop",enemy.debuffs);
+                if (debuff == null) enemy.debuffs.Add(new DebuffSlow(enemy, 3f, -0.5f, "squirrel_poop")); 
+                else debuff.Extend(3f);
+                Sound.Play(voice,Sound.main.mud,0.5f,Random.Range(0.9f,1.1f)); 
+            } else Sound.Play(voice,Sound.main.acorn_tap,0.5f,Random.Range(0.9f,1.1f)); 
         }
     }
 
