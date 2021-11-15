@@ -11,8 +11,8 @@ public class DefenseBase : MonoBehaviour
     public AudioSource voice; // Sometimes we question, how can animals talk without a good vocal cord?
 
     // These will be modified from ActionWheelCore.
-    public int current_upgrade{get;set;}
-    public int upgrade_1_type{get;set;}
+    public int current_upgrade;
+    public int upgrade_1_type;
 
     protected EnemyBase target_enemy;
 
